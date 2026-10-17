@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie List</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #160b35;
+            color: white;
+        }
+
+        nav {
+            background: #21104d;
+            padding: 20px 8%;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
+        h1 {
+            color: #ff4fc3;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add {
+            background: #ff3fb4;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        .movie {
+            background: #241653;
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .movie h2 {
+            margin: 0;
+        }
+
+        .info {
+            color: #ccc;
+        }
+
+        .rating {
+            color: #ffd43b;
+            font-weight: bold;
+        }
+
+        .actions a {
+            color: white;
+            text-decoration: none;
+            margin-left: 10px;
+            padding: 8px 12px;
+            background: #6331bb;
+            border-radius: 6px;
+        }
+
+        .delete {
+            background: #c72c5b !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <a href="/">🎬 MovieHub</a>
+    <a href="/movies/">Movies</a>
+    <a href="/add/">Add Movie</a>
+</nav>
+
+<div class="container">
+
+    <div class="top">
+        <h1>🎬 Movie List</h1>
+
+        <a href="/add/" class="add">
+            + Add Movie
+        </a>
+    </div>
+
+    {% for movie in movies %}
+
+    <div class="movie">
+
+        <div>
+            <h2>{{ movie.title }}</h2>
+
+            <p class="info">
+                {{ movie.genre }} |
+                {{ movie.release_year }} |
+                {{ movie.director }}
+            </p>
+
+            <div class="rating">
+                ⭐ {{ movie.rating }}
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'movie_detail' movie.id %}">
+                View
+            </a>
+
+            <a href="{% url 'edit_movie' movie.id %}">
+                Edit
+            </a>
+
+            <a href="{% url 'delete_movie' movie.id %}" class="delete">
+                Delete
+            </a>
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <p>No movies available.</p>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

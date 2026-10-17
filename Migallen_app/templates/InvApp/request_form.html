@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Request Form</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+
+        body {
+            background: linear-gradient(135deg, #e0f2fe, #dcfce7);
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            padding: 50px;
+        }
+
+        .form-box {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.12);
+        }
+
+        h1 {
+            color: #075985;
+            font-weight: bold;
+        }
+
+        label {
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #0284c7, #16a34a);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .btn-submit:hover {
+            opacity: .9;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="form-box">
+
+    <h1>📝 Request Form</h1>
+
+    <p class="text-muted">
+        Fill out the form to submit your request.
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="mb-3">
+
+            <label>
+                Request Type
+            </label>
+
+            {{ form.request_type }}
+
+        </div>
+
+
+        <div class="mb-4">
+
+            <label>
+                Description
+            </label>
+
+            {{ form.description }}
+
+        </div>
+
+
+        <div class="d-flex gap-2">
+
+            <a href="{% url 'dashboard' %}"
+               class="btn btn-light border">
+                Cancel
+            </a>
+
+            <button type="submit"
+                    class="btn-submit">
+                <i class="bi bi-send"></i>
+                Submit Request
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

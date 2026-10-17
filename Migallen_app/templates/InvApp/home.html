@@ -1,0 +1,393 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHub | Discover Movies</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050914;
+            color: #fff;
+        }
+
+        /* NAVBAR */
+        nav {
+            height: 80px;
+            padding: 0 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #090d1c;
+            border-bottom: 1px solid #252443;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .logo span {
+            color: #f43fba;
+        }
+
+        .logo-icon {
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #dedcf3;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f43fba;
+        }
+
+        .nav-links .active {
+            background: linear-gradient(135deg, #7025a9, #a21caf);
+            padding: 13px 22px;
+            border-radius: 25px;
+            color: white;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 430px;
+            padding: 70px 8%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg,
+                    rgba(5, 8, 24, 0.98) 0%,
+                    rgba(21, 8, 39, 0.85) 43%,
+                    rgba(10, 7, 30, 0.2) 100%),
+                url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1800&q=85")
+                center/cover no-repeat;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            color: #e879f9;
+            letter-spacing: 5px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: clamp(44px, 6vw, 76px);
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 span {
+            color: #f43fba;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            color: #d8c9ff;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            color: #ddd9ed;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            padding: 16px 30px;
+            background: linear-gradient(135deg, #ec4899, #9333ea);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 12px;
+            transition: 0.3s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px #a21caf55;
+        }
+
+        /* MOVIE SECTION */
+        .movies-section {
+            padding: 35px 7%;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .section-heading h2 {
+            font-size: 26px;
+        }
+
+        .section-heading h2 span {
+            color: #e879f9;
+            margin-right: 8px;
+        }
+
+        .view-all {
+            color: #c084fc;
+            text-decoration: none;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .movie-card {
+            min-width: 0;
+            background: #0b1021;
+            border: 1px solid #29294e;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-6px);
+            border-color: #c026d3;
+            box-shadow: 0 8px 25px #7e22ce25;
+        }
+
+        .poster {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            background: #17152c;
+        }
+
+        .movie-info {
+            padding: 13px;
+        }
+
+        .movie-info h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .rating {
+            color: #fbbf24;
+            font-size: 14px;
+        }
+
+        .rating span {
+            color: #d1d5db;
+            margin-left: 5px;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #9795b3;
+            border-top: 1px solid #252443;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .movie-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .poster {
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            nav {
+                height: auto;
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 18px;
+            }
+
+            .hero {
+                padding: 60px 25px;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+            .movies-section {
+                padding: 30px 20px;
+            }
+
+            .movie-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .poster {
+                height: 220px;
+            }
+
+            .section-heading h2 {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="/" class="logo" style="text-decoration:none;">
+            <span class="logo-icon">🎬</span>Movie<span>Hub</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="/" class="active">⌂ &nbsp; Home</a>
+            <a href="{% url 'movie_list' %}">▦ &nbsp; Movies</a>
+            <a href="{% url 'my_request' %}">▤ &nbsp; My Requests</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="eyebrow">WELCOME TO</div>
+
+            <h1>Movie<span>Hub</span></h1>
+
+            <h2>Discover Movies</h2>
+
+            <p>
+                Explore your favorite movies, genres, directors
+                and ratings. Find your next favorite movie today.
+            </p>
+
+            <a href="{% url 'movie_list' %}" class="primary-btn">
+                ▶ &nbsp; Browse Movies
+            </a>
+        </div>
+    </section>
+
+    <!-- TRENDING MOVIES -->
+    <section class="movies-section" id="trending">
+        <div class="section-heading">
+            <h2><span>🔥</span> Trending Movies</h2>
+            <a href="{% url 'movie_list' %}" class="view-all">
+                View All →
+            </a>
+        </div>
+
+        <div class="movie-grid">
+
+            <article class="movie-card">
+                <img class="poster"
+                     src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"
+                     alt="Spider-Man movie poster">
+                <div class="movie-info">
+                    <h3>Spider-Man: No Way Home</h3>
+                    <div class="rating">★ <span>8.2</span></div>
+                </div>
+            </article>
+
+            <article class="movie-card">
+                <img class="poster"
+                     src="https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg"
+                     alt="Avengers Endgame movie poster">
+                <div class="movie-info">
+                    <h3>Avengers: Endgame</h3>
+                    <div class="rating">★ <span>8.4</span></div>
+                </div>
+            </article>
+
+            <article class="movie-card">
+                <img class="poster"
+                     src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+                     alt="Interstellar movie poster">
+                <div class="movie-info">
+                    <h3>Interstellar</h3>
+                    <div class="rating">★ <span>8.6</span></div>
+                </div>
+            </article>
+
+            <article class="movie-card">
+                <img class="poster"
+                     src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+                     alt="The Dark Knight movie poster">
+                <div class="movie-info">
+                    <h3>The Dark Knight</h3>
+                    <div class="rating">★ <span>9.0</span></div>
+                </div>
+            </article>
+
+            <article class="movie-card">
+                <img class="poster"
+                     src="https://image.tmdb.org/t/p/w500/o0MOvPa4OFeV7iR3pl0Z9q7Zb9x.jpg"
+                     alt="Inception movie poster">
+                <div class="movie-info">
+                    <h3>Inception</h3>
+                    <div class="rating">★ <span>8.8</span></div>
+                </div>
+            </article>
+
+            <article class="movie-card">
+                <img class="poster"
+                     src="https://image.tmdb.org/t/p/w500/9Xk3z2lG0m3p3Y6Z1d6Y7x5.jpg"
+                     alt="Your Name movie poster">
+                <div class="movie-info">
+                    <h3>Your Name</h3>
+                    <div class="rating">★ <span>8.4</span></div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <footer>
+        © 2026 MovieHub. Discover your next favorite movie.
+    </footer>
+
+</body>
+</html>
